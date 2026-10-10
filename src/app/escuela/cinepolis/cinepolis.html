@@ -1,1 +1,62 @@
-<p>cinepolis works!</p>
+<div class="max-w-2xl mx-auto mt-10 p-8 bg-gray-200 rounded-xl shadow-lg text-gray-800 font-sans">
+  <div class="flex justify-center mb-6">
+    <img src="https://logodownload.org/wp-content/uploads/2017/11/cinepolis-logo-8-599x147.png" alt="Cinépolis Logo" class="h-12 object-contain">
+  </div>
+
+  <form [formGroup]="cine">
+    <!-- Entradas -->
+    <div class="bg-blue-900 text-white p-6 rounded-lg shadow-md mb-6 border border-blue-400">
+      <h2 class="text-xl font-bold mb-4 border-b border-blue-400 pb-2">Entradas</h2>
+      
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium">Nombre</label>
+        <input type="text" formControlName="nombre" class="text-black bg-gray-50 border-gray-300 rounded-lg w-full p-2.5">
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium">Cantidad Compradores</label>
+        <input type="number" formControlName="compradores" class="text-black bg-gray-50 border-gray-300 rounded-lg w-full p-2.5">
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium">Tarjeta Cineco</label>
+        <div class="flex gap-4 mt-2">
+          <label class="cursor-pointer"><input type="radio" value="Si" formControlName="cineco"> Sí</label>
+          <label class="cursor-pointer"><input type="radio" value="No" formControlName="cineco"> No</label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-medium">Cantidad De Boletos</label>
+        <input type="number" formControlName="boletos" class="text-black bg-gray-50 border-gray-300 rounded-lg w-full p-2.5">
+      </div>
+    </div>
+
+    <!-- Salidas -->
+    <div class="bg-blue-900 text-white p-6 rounded-lg shadow-md border border-blue-400">
+      <h2 class="text-xl font-bold mb-4 border-b border-blue-400 pb-2">Salidas</h2>
+      
+      <div class="mb-4 text-center">
+        <label class="block mb-2 text-lg font-medium">Valor a Pagar</label>
+        <div class="bg-white text-black font-extrabold text-3xl rounded-lg p-3 w-full border-4 border-yellow-400 min-h-[65px] flex items-center justify-center">
+          <span *ngIf="resultado">{{ totalPagar | currency:'USD':'symbol':'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <!-- Alerta de error -->
+      <div *ngIf="mensaje" class="bg-red-100 text-red-800 p-3 rounded-lg mb-4 text-center font-bold text-sm">
+        {{ mensaje }}
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-center gap-4 mt-6">
+        <button type="button" (click)="procesarCompra()" [disabled]="cine.invalid" class="bg-yellow-400 text-blue-900 font-bold px-8 py-2 rounded-lg hover:bg-yellow-300 focus:ring-4 focus:ring-yellow-200 disabled:opacity-50">
+          Procesar
+        </button>
+        <button type="button" (click)="salir()" class="bg-gray-100 text-black font-bold px-8 py-2 rounded-lg hover:bg-white focus:ring-4 focus:ring-gray-400">
+          Salir
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
