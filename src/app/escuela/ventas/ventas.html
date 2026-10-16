@@ -1,0 +1,91 @@
+<div class="max-w-6xl mx-auto mt-10 p-8 bg-blue-1000 rounded-xl shadow-2xl font-sans text-white border border-blue-800">
+  <div class="flex justify-center mb-8 border-b border-blue-700 pb-6">
+      <img src="https://logodownload.org/wp-content/uploads/2017/11/cinepolis-logo-8-599x147.png" alt="Cinépolis Logo" class="h-14 object-contain drop-shadow-lg">
+  </div>
+
+  <h2 class="mb-6 text-3xl font-extrabold text-white text-center tracking-wide">Historial de Ventas</h2>
+
+  <div class="relative overflow-x-auto shadow-xl sm:rounded-lg border border-blue-400">
+    <table class="w-full text-sm text-left">
+      <thead class="text-xs text-white uppercase bg-blue-800 border-b border-blue-400">
+        <tr>
+          <th scope="col" class="px-6 py-4">Nombre</th>
+          <th scope="col" class="px-6 py-4 text-center">Compradores</th>
+          <th scope="col" class="px-6 py-4 text-center">Tarjeta Cineco</th>
+          <th scope="col" class="px-6 py-4 text-center">Boletos</th>
+          <th scope="col" class="px-6 py-4">Costo</th>
+          <th scope="col" class="px-6 py-4 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta1 of ventas; let i = index" class="bg-gray-50 text-gray-900 border-b border-gray-300 hover:bg-gray-200 transition-colors">
+          <td class="px-6 py-4 font-bold whitespace-nowrap">{{ venta1.nombre }}</td>
+          <td class="px-6 py-4 text-center font-medium">{{ venta1.compradores }}</td>
+          <td class="px-6 py-4 text-center font-bold text-blue-800">{{ venta1.cineco }}</td>
+          <td class="px-6 py-4 text-center font-medium">{{ venta1.boletos }}</td>
+          <td class="px-6 py-4 font-extrabold text-green-700 text-base">
+            {{ venta1.costo | currency:'USD':'symbol':'1.2-2' }}
+          </td>
+          <td class="px-6 py-4">
+            <div class="flex justify-center gap-3">
+              <button type="button" (click)="editarVenta(i)" class="px-4 py-2 text-sm font-bold text-blue-900 bg-yellow-400 rounded-lg hover:bg-yellow-300 focus:ring-4 focus:outline-none focus:ring-yellow-200 shadow-md">
+                Editar
+              </button>
+              <button type="button" (click)="eliminarVenta(i)" class="px-4 py-2 text-sm font-bold text-white bg-red-600 rounded-lg hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-400 shadow-md">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="ventas.length === 0" class="p-6 mt-8 text-sm text-blue-900 rounded-lg bg-blue-100 border border-blue-300 shadow-md text-center" role="alert">
+    <span class="font-bold text-lg block mb-1">¡Aún no hay clientes!</span> 
+    Hasta el momento no hay clientes. Favor de ir a la sección de compras y agregar un nuevo cliente.
+  </div>
+</div>
+
+<!-- MODAL -->
+<div *ngIf="mostrarModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 font-sans">
+  <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-6 text-gray-900 relative">
+    
+    <h3 class="text-2xl font-bold mb-4 border-b border-gray-300 pb-3 text-blue-900">Modificar Venta</h3>
+    
+    <form [formGroup]="formularioEditar">
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-bold">Nombre</label>
+        <input type="text" formControlName="nombre" class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-bold">Cantidad Compradores</label>
+        <input type="number" formControlName="compradores" class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-bold">Tarjeta Cineco</label>
+        <div class="flex gap-4 mt-2">
+          <label class="cursor-pointer"><input type="radio" value="Si" formControlName="cineco"> Sí</label>
+          <label class="cursor-pointer"><input type="radio" value="No" formControlName="cineco"> No</label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 text-sm font-bold">Cantidad De Boletos</label>
+        <input type="number" formControlName="boletos" class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
+      </div>
+
+      <!-- Botones del Modal -->
+      <div class="flex justify-end gap-3 mt-6">
+        <button type="button" (click)="cerrarModal()" class="px-5 py-2.5 text-sm font-bold text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
+          Cancelar
+        </button>
+        <button type="button" (click)="guardarEdicion()" [disabled]="formularioEditar.invalid" class="px-5 py-2.5 text-sm font-bold text-blue-900 bg-yellow-400 rounded-lg hover:bg-yellow-300 disabled:opacity-50 shadow-md">
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

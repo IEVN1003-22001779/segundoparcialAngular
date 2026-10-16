@@ -6,8 +6,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   selector: 'app-cinepolis',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './cinepolis.html',
-  styleUrls: ['./cinepolis.css'] 
+  templateUrl: './cinepolis.html'
 })
 export class Cinepolis implements OnInit {
   cine!: FormGroup; 
@@ -28,7 +27,8 @@ export class Cinepolis implements OnInit {
     this.mensaje = '';
     this.resultado = false;
 
-    const compradores = this.cine.value.compradores;
+    const nombre = this.cine.value.nombre;
+    const compradores = this.cine.value.compradores; 
     const boletos = this.cine.value.boletos;
     const cineco = this.cine.value.cineco;
 
@@ -57,6 +57,18 @@ export class Cinepolis implements OnInit {
 
     this.totalPagar = total;
     this.resultado = true;
+
+    const nuevaVenta = {
+      nombre: nombre,
+      compradores: compradores,
+      cineco: cineco,
+      boletos: boletos,
+      costo: total
+    };
+
+    let historial = JSON.parse(localStorage.getItem('ventasCine') || '[]');
+    historial.push(nuevaVenta);
+    localStorage.setItem('ventasCine', JSON.stringify(historial));
   }
 
   salir(): void {
