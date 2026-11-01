@@ -8,8 +8,7 @@ import { Distancia } from './Formulario/distancia/distancia';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, ZodiacoComponent, Navbar, Distancia],
-  templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  templateUrl: './app.html'
 })
 export class App implements OnInit {
   title = 'segundoparcialAngular';

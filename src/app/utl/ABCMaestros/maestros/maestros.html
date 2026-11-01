@@ -1,0 +1,65 @@
+<div class="bg-white dark:bg-gray-800 shadow-md rounded-lg border border-gray-200 dark:border-gray-700">
+  
+  <!-- Encabezado y Botón de Agregar -->
+  <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+      Gestión de Maestros
+    </h1>
+    <a routerLink="/utl/agregar-maestro" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none transition-colors">
+      + Agregar Nuevo Maestro
+    </a>
+  </div>
+
+  <!-- Barra de Búsqueda -->
+  <div class="p-5">
+    <div class="flex items-center gap-4">
+      <label for="listFilter" class="text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+        Filtrar por:
+      </label>
+      <div class="w-full md:w-1/2 relative">
+        <input
+          [(ngModel)]="listFilter"
+          type="text"
+          name="listFilter"
+          id="listFilter"
+          placeholder="Ingrese ID o nombre del maestro..."
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla Flowbite -->
+  <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">ID Maestro</th>
+          <th scope="col" class="px-6 py-3">Nombre</th>
+          <th scope="col" class="px-6 py-3">A. Paterno</th>
+          <th scope="col" class="px-6 py-3">A. Materno</th>
+          <th scope="col" class="px-6 py-3">Correo</th>
+          <th scope="col" class="px-6 py-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let maestro of maestros | maestrosFilter:listFilter" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{maestro.idmaestro}}
+          </th>
+          <td class="px-6 py-4">{{maestro.nombre}}</td>
+          <td class="px-6 py-4">{{maestro.apaterno}}</td>
+          <td class="px-6 py-4">{{maestro.amaterno}}</td>
+          <td class="px-6 py-4">{{maestro.correo}}</td>
+          <td class="px-6 py-4 flex justify-center gap-4">
+            <a [routerLink]="['/utl/editar-maestro', maestro.idmaestro]" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+            <a [routerLink]="['/utl/eliminar-maestro', maestro.idmaestro]" class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!maestros || maestros.length === 0" class="p-8 text-center">
+      <p class="text-gray-500 dark:text-gray-400">No hay maestros registrados en la base de datos.</p>
+    </div>
+  </div>
+</div>
